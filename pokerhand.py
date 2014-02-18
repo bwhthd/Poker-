@@ -15,7 +15,7 @@ def determine_hand(hand):
 	else:
 		if straight(hand, dist):
 			if flush(hand):
-				if royal(hand, dist):
+				if royal(dist):
 					return "Royal Flush"
 				return "Straight Flush"
 			return "Straight"
@@ -43,6 +43,9 @@ def of_a_kind(hand, dist):
 		elif dist[i] == 2:
 			return 'Two Pair'
 
+def royal(dist):
+	return False
+
 def flush(hand):
 	suit = hand[0].suit
 	for card in hand:
@@ -51,8 +54,10 @@ def flush(hand):
 	return True
 
 def straight(hand, dist):
-	for i in range(13):
-		if dist[i] #check to see if the distribution has a pattern of five 1's in a row [...,1,1,1,1,1...]
+	index = find_index(1, dist)
+	for i in dist[index:index+5]:
+		if dist[i] == 0:
+			return False
 	return True
 
 def find_index(x, iterable):#find index of element in a list
@@ -62,7 +67,7 @@ def find_index(x, iterable):#find index of element in a list
     return None
 
 def main():
-	hand = [card('H','A'),card('H','2'),card('H','3'),card('H','4'),card('H','5')]
+	hand = [card('H','A'),card('H','8'),card('H','3'),card('H','4'),card('H','5')]
 	print determine_hand(hand)
 
 if __name__ == '__main__':
