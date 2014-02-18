@@ -13,7 +13,7 @@ def determine_hand(hand):
 	if repeats(hand, dist):
 		return of_a_kind(hand, dist)
 	else:
-		if straight(hand, dist):
+		if straight(dist):
 			if flush(hand):
 				if royal(dist):
 					return "Royal Flush"
@@ -44,7 +44,9 @@ def of_a_kind(hand, dist):
 			return 'Two Pair'
 
 def royal(dist):
-	return False
+	if(dist[9:] != [1,1,1,1]) or dist[0] != 1:
+		return False
+	return True
 
 def flush(hand):
 	suit = hand[0].suit
@@ -53,12 +55,20 @@ def flush(hand):
 			return False
 	return True
 
-def straight(hand, dist):
+def straight(dist):
 	index = find_index(1, dist)
-	for i in dist[index:index+5]:
-		if dist[i] == 0:
-			return False
-	return True
+	print dist[index:index+2]
+	if dist[index:index+5] == [1,1,1,1,1]:
+		return True
+	if dist[index-4:] == [1,1,1,1] and dist[index] == 1:
+		return True
+	if dist[index-3:] == [1,1,1] and dist[index:index+2] == [1,1]:
+		return True
+	if dist[index-2:] == [1,1] and dist[index:index+3] == [1,1,1]:
+		return True
+	if dist[index-1:] == [1] and dist[index:index+4] == [1,1,1,1]:
+		return True
+	return False
 
 def find_index(x, iterable):#find index of element in a list
     for i, item in enumerate(iterable):
@@ -67,7 +77,7 @@ def find_index(x, iterable):#find index of element in a list
     return None
 
 def main():
-	hand = [card('H','A'),card('H','8'),card('H','3'),card('H','4'),card('H','5')]
+	hand = [card('H','A'),card('C','2'),card('H','J'),card('H','Q'),card('H','K')]
 	print determine_hand(hand)
 
 if __name__ == '__main__':
