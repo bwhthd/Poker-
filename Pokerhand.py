@@ -1,12 +1,7 @@
 #!usr/bin/bash/python
-import sys
+from Card import *
 suits = 'H D C S'.split(' ')
 ranks = 'A 2 3 4 5 6 7 8 9 10 J Q K'.split(' ')
-
-class card(object):
-	def __init__(self,suit,rank):
-		self.suit = suit
-		self.rank = rank
 
 def determine_hand(hand):
 	dist = get_distribution(hand)
@@ -57,7 +52,6 @@ def flush(hand):
 
 def straight(dist):
 	index = find_index(1, dist)
-	print dist[index:index+2]
 	if dist[index:index+5] == [1,1,1,1,1]:
 		return True
 	if dist[index-4:] == [1,1,1,1] and dist[index] == 1:
@@ -77,7 +71,7 @@ def find_index(x, iterable):#find index of element in a list
     return None
 
 def main():
-	hand = [card('H','A'),card('C','2'),card('H','J'),card('H','Q'),card('H','K')]
+	hand = [Card('H','A'),Card('C','2'),Card('H','J'),Card('H','Q'),Card('H','K')]
 	print determine_hand(hand)
 
 if __name__ == '__main__':
